@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Emek Enderun - Günlük Program</title>
-        <link rel="icon" type="image/png" href="https://r.resimlink.com/XMru4hv.png">
+    <link rel="icon" type="image/png" href="https://r.resimlink.com/XMru4hv.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:wght@700&display=swap');
 
         :root {
             --bg-color: #f4f4f6;
-            --card-bg: #ffffff;
             --text-main: #2c3e50;
             --text-muted: #7f8c8d;
             --accent: #95a5a6;
@@ -68,49 +67,26 @@
         }
         .btn:active { transform: scale(0.95); }
 
-        /* --- DÜZELTİLMİŞ EKRAN STİLLERİ --- */
         .screen {
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100vh; 
-            height: 100dvh; /* Mobil tarayıcılar için dinamik yükseklik */
-            background: var(--bg-color); 
-            z-index: 100; 
-            transform: translateY(100%);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100dvh;
+            background: var(--bg-color); z-index: 100; transform: translateY(100%);
             transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-            
-            /* KAYDIRMA (SCROLL) AYARLARI */
-            overflow-y: auto; 
-            -webkit-overflow-scrolling: touch; /* iOS için akıcı kaydırma */
-            
-            display: flex; 
-            flex-direction: column; 
-            align-items: center;
+            overflow-y: auto; -webkit-overflow-scrolling: touch;
+            display: flex; flex-direction: column; align-items: center;
         }
-        
         .screen.active { transform: translateY(0); }
 
         .screen-content {
-            width: 100%;
-            padding: 20px;
-            padding-bottom: 100px; /* En alttaki içeriğin görünmesi için boşluk */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            width: 100%; padding: 20px; padding-bottom: 100px;
+            display: flex; flex-direction: column; align-items: center;
         }
 
         .header-bar {
             width: 100%; max-width: 1000px; display: flex; justify-content: space-between;
             align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #ddd;
-            position: sticky; /* Üstte sabit kalsın */
-            top: 0;
-            background: var(--bg-color);
-            z-index: 10;
-            padding-top: 10px;
+            position: sticky; top: 0; background: var(--bg-color); z-index: 10; padding-top: 10px;
         }
-        
+
         .back-btn {
             background: white; border: 1px solid #ddd; padding: 8px 15px; border-radius: 20px;
             font-size: 0.9rem; color: var(--text-main); font-weight: 600;
@@ -118,7 +94,7 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .back-btn:hover { background: var(--text-main); color: white; }
-        
+
         .live-clock {
             font-size: 1.1rem; font-weight: 700; color: var(--text-main);
             background: white; padding: 5px 15px; border-radius: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
@@ -145,13 +121,10 @@
         .highlight-text { color: var(--highlight); font-weight: 700; }
         .bold-text { font-weight: 700; }
         .group-header { background: #ecf0f1; font-weight: 700; text-align: center; padding: 10px; border-bottom: 2px solid #bdc3c7; }
-        
-        .list-item {
-            padding: 15px; border-bottom: 1px solid #f0f0f0;
-            font-size: 1.1rem; font-weight: 500; text-align: center;
-        }
+
+        .list-item { padding: 15px; border-bottom: 1px solid #f0f0f0; font-size: 1.1rem; font-weight: 500; text-align: center; }
         .list-item:last-child { border-bottom: none; }
-        
+
         .footer-role {
             margin-top: 0; padding: 15px; background: #2c3e50; color: white;
             text-align: center; font-weight: 700; border-radius: 8px;
@@ -159,8 +132,16 @@
         }
 
         .split-table { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; width: 100%; max-width: 1000px; }
-        .split-container { flex: 1; min-width: 300px; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 20px;}
+        .split-container { flex: 1; min-width: 300px; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 20px; }
         .split-title { background: #2c3e50; color: white; padding: 10px; text-align: center; font-weight: 700; letter-spacing: 1px; }
+
+        .version-badge {
+            position: fixed; bottom: 12px; left: 12px; z-index: 300;
+            background: rgba(44, 62, 80, 0.85); color: #fff;
+            font-size: 0.7rem; font-weight: 600; letter-spacing: 1px;
+            padding: 5px 12px; border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
 
         @media (max-width: 600px) {
             h1 { font-size: 2rem; }
@@ -189,10 +170,10 @@
             <button class="btn" onclick="openScreen('yemekScreen')">Yemekçilik Listesi</button>
             <button class="btn" onclick="openScreen('cayScreen')">Çaycılar Listesi</button>
             <button class="btn" onclick="openScreen('kiraatScreen')">İmam - Müezzin</button>
+            <button class="btn" onclick="openScreen('temizlikScreen')">Temizlik Listesi</button>
         </div>
     </div>
 
-    <!-- PROGRAM -->
     <div class="screen" id="programScreen">
         <div class="screen-content">
             <div class="header-bar">
@@ -208,7 +189,6 @@
         </div>
     </div>
 
-    <!-- YEMEKÇİLİK -->
     <div class="screen" id="yemekScreen">
         <div class="screen-content">
             <div class="header-bar">
@@ -219,7 +199,6 @@
         </div>
     </div>
 
-    <!-- ÇAYCILAR -->
     <div class="screen" id="cayScreen">
         <div class="screen-content">
             <div class="header-bar">
@@ -231,7 +210,6 @@
         </div>
     </div>
 
-    <!-- İMAM MÜEZZİN -->
     <div class="screen" id="kiraatScreen">
         <div class="screen-content">
             <div class="header-bar">
@@ -251,7 +229,23 @@
         </div>
     </div>
 
-    <script>
+    <div class="screen" id="temizlikScreen">
+        <div class="screen-content">
+            <div class="header-bar">
+                <button class="back-btn" onclick="closeScreen('temizlikScreen')">← Geri Dön</button>
+                <h2 style="font-size: 1.1rem; color: var(--text-main);">Temizlik Listesi</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>TEMİZLİK YERİ</th><th>TEMİZLEYEN ADI SOYADI</th><th>SINIFI</th><th>KAT MESULÜ</th></tr></thead>
+                    <tbody id="temizlikBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="version-badge">v2.0</div>
+        <script>
         const scheduleData = [
             { start: "04:45", end: "05:00", title: "KALKIŞ VE NAMAZA HAZIRLIK", type: "normal" },
             { start: "05:00", end: "05:15", title: "SABAH NAMAZI", type: "bold" },
@@ -354,6 +348,80 @@
             { sira: 27, name: "AHMET ENES KURU", sinif: "11" }, { sira: 28, name: "AHMET BEDİRHAN ÖZCAN", sinif: "11" }
         ];
 
+        const temizlikData = [
+            { kat: "ZEMİN KAT", rows: [
+                ["SPOR SALONU", "MUHAMMED ENSAR AYDIN", "11", "TİMUR ASİMOV"],
+                ["MERDİVEN ALTI", "MUHAMMED ENES KINCAK", "10", "TİMUR ASİMOV"],
+                ["DEPO", "MUHAMMED ENES KINCAK", "10", "TİMUR ASİMOV"],
+                ["GİRİŞ AYAKKABILIK VE MÜRACAAT", "YUSUF GÜLCAN", "11", "YASİN AKGÖZ"],
+                ["CAMLI ODA", "EYMEN AKİF UYAR", "10", "YASİN AKGÖZ"],
+                ["SALON", "FARUK SELİM ATACAN", "9", "YASİN AKGÖZ"],
+                ["GİRİŞ LAVABO", "TEVFİK TUNA ÇAKMAK", "11", "YASİN AKGÖZ"],
+                ["YEMEKHANE", "MEHMET BUĞRAHAN BİNGÖL", "10", "YASİN AKGÖZ"],
+                ["MERDİVEN", "YUSUF GÜLCAN", "11", "YASİN AKGÖZ"]
+            ]},
+            { kat: "1.KAT", rows: [
+                ["1.KAT MÜDÜRİYET", "AHMET FURKAN BALARBAN", "10", "AHMET HİLMİ KADIOĞLU"],
+                ["TOPLANTI ODASI", "AHMET FURKAN BALARBAN", "10", "AHMET HİLMİ KADIOĞLU"],
+                ["ZİYARETÇİ ODASI", "AHMET SELİM ERDEM", "10", "AHMET HİLMİ KADIOĞLU"],
+                ["Y.MESUL ODASI", "ABDULKADİR DÜZGÜN", "11", "AHMET HİLMİ KADIOĞLU"],
+                ["HUSUSİ ODA", "ABDULKADİR DÜZGÜN", "11", "AHMET HİLMİ KADIOĞLU"],
+                ["TUVALETLER", "ABDULKADİR DÜZGÜN", "11", "AHMET HİLMİ KADIOĞLU"],
+                ["MERDİVEN", "YUSUF GÜLCAN", "11", "AHMET HİLMİ KADIOĞLU"],
+                ["HOL", "MEHMET AKİF ÇAKIR", "11", "AHMET HİLMİ KADIOĞLU"],
+                ["ÇAYHANE", "İSMAİL ÇOMAK", "10", "AHMET HİLMİ KADIOĞLU"]
+            ]},
+            { kat: "2.KAT", rows: [
+                ["2. KAT TUVALETLER", "MEHMET ENES İNAN", "12", "EMRULLAH MENTEŞE"],
+                ["TM ETÜT", "OSMAN KENAN ÇİMENDAĞ", "12", "EMRULLAH MENTEŞE"],
+                ["SAYISAL ETÜT", "OSMAN YEŞİLIRMAK", "12", "EMRULLAH MENTEŞE"],
+                ["PERSONEL ODASI", "MEHMET SELİM DEMİRCİ", "12", "EMRULLAH MENTEŞE"],
+                ["MESCİT", "EMİN KEREM AKÇAY", "12", "EMRULLAH MENTEŞE"],
+                ["HOL", "İBRAHİM YAĞIZ YİĞEN", "12", "EMRULLAH MENTEŞE"],
+                ["MERDİVEN", "YUSUF GÜLCAN", "11", "EMRULLAH MENTEŞE"]
+            ]},
+            { kat: "3.KAT", rows: [
+                ["3. KAT 9. SINIF ETÜT", "ALİHAN ÖZEN", "9", "OĞUZHAN TUNA"],
+                ["10. SINIF ETÜT", "MUHİTTİN KILIÇ", "10", "OĞUZHAN TUNA"],
+                ["11. TM ETÜT", "ARİFHAN İNAN", "11", "OĞUZHAN TUNA"],
+                ["11. SAYISAL ETÜT", "ARİFHAN İNAN", "11", "OĞUZHAN TUNA"],
+                ["HOL", "HÜSEYİN EMİR AKKOÇ", "11", "OĞUZHAN TUNA"],
+                ["TUVALETLER", "YUSUF KEREM ERTAŞ", "10", "OĞUZHAN TUNA"],
+                ["BİLGİ İŞLEM", "İHSAN BEDİR ŞENOL", "11", "OĞUZHAN TUNA"],
+                ["TALEBE GÖRÜŞME ODASI", "MUHİTTİN KILIÇ", "10", "OĞUZHAN TUNA"],
+                ["ÖĞRETMENLER ODASI", "İHSAN BEDİR ŞENOL", "11", "OĞUZHAN TUNA"],
+                ["MERDİVEN", "YUSUF GÜLCAN", "11", "OĞUZHAN TUNA"]
+            ]},
+            { kat: "4.KAT", rows: [
+                ["4.KAT YATAKHANE", "YUNUS KEREM ÖZDEMİR", "12", "HAKAN KOCAARİ"],
+                ["YATAKHANE", "YUNUS KEREM ÖZDEMİR", "12", "HAKAN KOCAARİ"],
+                ["REVİR", "MEHMET YILMAZ", "12", "HAKAN KOCAARİ"],
+                ["NÖB. PER. ODASI", "MEHMET YILMAZ", "12", "HAKAN KOCAARİ"],
+                ["HOL", "AHMET FATİH ÖLMEZ", "12", "HAKAN KOCAARİ"],
+                ["BANYOLAR", "BEHLÜL EDİP ÇAKIR", "12", "HAKAN KOCAARİ"],
+                ["TUVALETLER", "MEHMET ENES İNAN", "12", "HAKAN KOCAARİ"],
+                ["MERDİVEN", "AHMET FATİH ÖLMEZ", "12", "HAKAN KOCAARİ"]
+            ]},
+            { kat: "5.KAT", rows: [
+                ["5. KAT 9. SINIF YATAKHANE", "MEHMET EMRE ÜLKER", "9", "ERCAN GÜRÜLTÜOĞLU"],
+                ["10. SINIF YATAKHANE", "HİLMİ ENES BAYRAM", "10", "ERCAN GÜRÜLTÜOĞLU"],
+                ["10. YATAKHANE", "HİLMİ ENES BAYRAM", "10", "ERCAN GÜRÜLTÜOĞLU"],
+                ["11. SINIF YATAKHANE", "SENCER ÇELİKKANAT", "11", "ERCAN GÜRÜLTÜOĞLU"],
+                ["11. SINIF YATAKHANE", "SENCER ÇELİKKANAT", "11", "ERCAN GÜRÜLTÜOĞLU"],
+                ["HOL", "AHMET BEDİRHAN ÖZCAN", "11", "ERCAN GÜRÜLTÜOĞLU"],
+                ["TUVALETLER", "AHMET KEREM BAYRAKTAR, AHMET ENES KURU", "11-11", "ERCAN GÜRÜLTÜOĞLU"],
+                ["KURUTMALIK", "YUSUF KEMAL YETİM", "10", "ERCAN GÜRÜLTÜOĞLU"],
+                ["MERDİVEN", "YUSUF KEMAL YETİM", "10", "ERCAN GÜRÜLTÜOĞLU"]
+            ]},
+            { kat: "6.KAT", rows: [
+                ["6. KAT LOKAL", "MEHMET EMRE OKYAY", "10", "AHMET ALİHAN DOĞAN"],
+                ["BİLGİSAYAR ODASI", "KEREM TALHA YILDIRIM", "11", "AHMET ALİHAN DOĞAN"],
+                ["KÜTÜPHANE", "MEHMET HAMZA EREN", "9", "AHMET ALİHAN DOĞAN"],
+                ["HOL", "MEHMET HAMZA EREN", "9", "AHMET ALİHAN DOĞAN"],
+                ["KANTİN", "MUSTAFA EMİR BEKİ", "10", "AHMET ALİHAN DOĞAN"]
+            ]}
+        ];
+
         function renderSchedule() {
             const tbody = document.getElementById('scheduleBody'); tbody.innerHTML = '';
             const now = new Date(); const currentMinutes = now.getHours() * 60 + now.getMinutes();
@@ -394,6 +462,18 @@
             document.getElementById('muezzinBody').innerHTML = muezzinData.map(m => `<tr><td>${m.sira}</td><td>${m.name}</td><td>${m.sinif}</td></tr>`).join('');
         }
 
+        function renderTemizlik() {
+            const tbody = document.getElementById('temizlikBody');
+            let html = '';
+            temizlikData.forEach(k => {
+                html += `<tr><td colspan="4" class="group-header">${k.kat}</td></tr>`;
+                k.rows.forEach(r => {
+                    html += `<tr><td class="bold-text" style="text-align:left; padding-left:10px;">${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="bold-text">${r[3]}</td></tr>`;
+                });
+            });
+            tbody.innerHTML = html;
+        }
+
         function updateClock() {
             document.getElementById('clock1').textContent = new Date().toLocaleTimeString('tr-TR');
             if (new Date().getSeconds() === 0) renderSchedule();
@@ -409,12 +489,12 @@
 
         function openScreen(id) {
             document.getElementById(id).classList.add('active');
-            document.getElementById(id).scrollTop = 0; // Açılınca en üste getir
-            
+            document.getElementById(id).scrollTop = 0;
             if(id === 'programScreen') renderSchedule();
             if(id === 'yemekScreen') renderYemek();
             if(id === 'cayScreen') renderCay();
             if(id === 'kiraatScreen') renderKiraat();
+            if(id === 'temizlikScreen') renderTemizlik();
         }
 
         function closeScreen(id) { document.getElementById(id).classList.remove('active'); }
@@ -422,7 +502,10 @@
         window.onload = () => {
             const savedPic = localStorage.getItem('enderunProfilePic');
             if (savedPic) document.getElementById('profileImage').src = savedPic;
-            renderSchedule(); setInterval(updateClock, 1000); updateClock();
+            renderSchedule();
+            renderTemizlik();
+            setInterval(updateClock, 1000);
+            updateClock();
         };
     </script>
 </body>
